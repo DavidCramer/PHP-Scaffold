@@ -47,21 +47,38 @@ include_once "libs/phpscaffold.php";
 
         $page = new Layout();
         $page->appendRow('12');
+        $page->appendRow('12');
         $page->appendRow('1:1:1:1:1:1:1:1:1:1:1:1');
         $page->appendRow('2:2:2:2:2:2');
         $page->appendRow('4:4:4');
+        $page->appendRow('4:8');
         $page->appendRow('6:6');
-        $page->appendRow('6');
         $page->appendRow('12');
-        $page->appendRow('6');
-        $page->offset(25, 6);
-        $page->appendRow('6:6');
-        $page->appendRow('4:4:4');
-        $page->appendRow('2:2:2:2:2:2');
-        $page->appendRow('1:1:1:1:1:1:1:1:1:1:1:1');
-        $page->appendRow('12');
+
         
         $page->debug();
+
+
+        $page->html('<h1>Grid Examples</h1>Showing span cound per column.', 1);
+        $page->html('12', 2);
+
+        // span count
+        for($i=3; $i<=14; $i++){
+            $page->html('1', $i);
+        }
+        // span count
+        for($i=15; $i<=20; $i++){
+            $page->html('2', $i);
+        }
+        // span count
+        for($i=21; $i<=23; $i++){
+            $page->html('4', $i);
+        }
+        $page->html('4', 24);
+        $page->html('8', 25);
+        $page->html('6', 26);
+        $page->html('6', 27);
+        $page->html('12', 28);
 
         echo $page->renderLayout();
 
