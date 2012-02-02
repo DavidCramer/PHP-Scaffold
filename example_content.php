@@ -1,5 +1,5 @@
 <?php
-include_once "libs/layout.php";
+include_once "libs/phpscaffold.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
