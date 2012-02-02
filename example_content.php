@@ -76,84 +76,84 @@ include_once "libs/phpscaffold.php";
         $page->setColumnClass('box', 1);
         
         
-        // Create the nested layout whic hwill go into column 3.
-        $nest = new Layout();
-        // Set the nested structure. it will be nested in an 8 column span
-        $nest->setLayout('4:4');
-        // set conent for the 1st nested column
-        $nest->html('Morbi interdum, metus non gravida faucibus, ligula lorem
-            egestas tellus, quis dapibus lectus nisl et tortor. Aenean sit amet
-            lorem velit, sed posuere sapien. Ut lacinia arcu condimentum metus
-            elementum facilisis.  ', 1);
-        // set conent for the 2nd nested column
-        $nest->html('Vivamus odio ante, auctor in facilisis
-            et, aliquet vitae eros. Etiam sed elit vitae dolor vehicula auctor
-            nec a tellus. Sed imperdiet tempor iaculis. Suspendisse nec turpis
-            at leo semper sodales. Cum sociis natoque penatibus et magnis dis
-            parturient montes, nascetur ridiculus mus. Quisque at diam nisi, sit
-            amet tristique ipsum. Donec id nibh cursus tortor venenatis tempus
-            at euismod magna. Sed dapibus felis vel elit porta id lacinia urna
-            aliquam. Praesent tempor neque vitae quam iaculis sed euismod turpis
-            dictum. Quisque vel enim libero. In volutpat euismod fringilla.
-            Etiam vel arcu id nisl auctor iaculis nec quis lorem. Praesent
-            posuere velit non justo elementum vel malesuada dui euismod.
-            Donec euismod sem vel nulla pharetra ullamcorper. Etiam placerat,
-            ligula eu tempor fermentum, quam erat luctus nisi, vitae ultricies
-            quam justo a odio. Vivamus commodo dictum leo ac suscipit.
-            Nunc convallis porta ipsum, sit amet lacinia nisi faucibus et.
-            Nunc tristique orci eu mauris semper tristique. In iaculis lectus
-            at quam adipiscing consequat. In egestas odio eget augue imperdiet
-            at molestie enim facilisis. Suspendisse metus nisi, suscipit non
-            feugiat non, molestie a magna. Nam non ante quis sapien hendrerit
-            laoreet. ', 2);
+            // Create the nested layout whic hwill go into column 3.
+            $nest = new Layout();
+            // Set the nested structure. it will be nested in an 8 column span
+            $nest->setLayout('4:4');
+            // set conent for the 1st nested column
+            $nest->html('Morbi interdum, metus non gravida faucibus, ligula lorem
+                egestas tellus, quis dapibus lectus nisl et tortor. Aenean sit amet
+                lorem velit, sed posuere sapien. Ut lacinia arcu condimentum metus
+                elementum facilisis.  ', 1);
+            // set conent for the 2nd nested column
+            $nest->html('Vivamus odio ante, auctor in facilisis
+                et, aliquet vitae eros. Etiam sed elit vitae dolor vehicula auctor
+                nec a tellus. Sed imperdiet tempor iaculis. Suspendisse nec turpis
+                at leo semper sodales. Cum sociis natoque penatibus et magnis dis
+                parturient montes, nascetur ridiculus mus. Quisque at diam nisi, sit
+                amet tristique ipsum. Donec id nibh cursus tortor venenatis tempus
+                at euismod magna. Sed dapibus felis vel elit porta id lacinia urna
+                aliquam. Praesent tempor neque vitae quam iaculis sed euismod turpis
+                dictum. Quisque vel enim libero. In volutpat euismod fringilla.
+                Etiam vel arcu id nisl auctor iaculis nec quis lorem. Praesent
+                posuere velit non justo elementum vel malesuada dui euismod.
+                Donec euismod sem vel nulla pharetra ullamcorper. Etiam placerat,
+                ligula eu tempor fermentum, quam erat luctus nisi, vitae ultricies
+                quam justo a odio. Vivamus commodo dictum leo ac suscipit.
+                Nunc convallis porta ipsum, sit amet lacinia nisi faucibus et.
+                Nunc tristique orci eu mauris semper tristique. In iaculis lectus
+                at quam adipiscing consequat. In egestas odio eget augue imperdiet
+                at molestie enim facilisis. Suspendisse metus nisi, suscipit non
+                feugiat non, molestie a magna. Nam non ante quis sapien hendrerit
+                laoreet. ', 2);
 
-        // set the 1st nested columns css class
-        $nest->setColumnClass('box', 1);
-        // set the 2nd nested columns css class
-        $nest->setColumnClass('box', 2);
-        // append another class name to the second  column
-        $nest->prependColumnClass('red-text', 2);
+            // set the 1st nested columns css class
+            $nest->setColumnClass('box', 1);
+            // set the 2nd nested columns css class
+            $nest->setColumnClass('box', 2);
+            // append another class name to the second  column
+            $nest->prependColumnClass('red-text', 2);
 
-        // create a 2nd nested object which well nest in the first nested object
-        $slip = new Layout();
+                // create a 2nd nested object which well nest in the first nested object
+                $slip = new Layout();
 
-        // set the layout to 2 rows, the first a single 4 span column and the
-        // seccond a 2 column row each column spanning 2 columns as it will be
-        // nested in a 4 span column.
-        $slip->setLayout('4|2:2');
+                // set the layout to 2 rows, the first a single 4 span column and the
+                // seccond a 2 column row each column spanning 2 columns as it will be
+                // nested in a 4 span column.
+                $slip->setLayout('4|2:2');
 
-        // set the content for the first column
-        $slip->html('<h3>Innser time <small>Nested nested</small></h3>', 1);
+                // set the content for the first column
+                $slip->html('<h3>Innser time <small>Nested nested</small></h3>', 1);
 
-        // set the content for the 3rd column
-        $slip->html('Aenean sit amet lorem velit, sed posuere sapien. Ut 
-            lacinia arcu condimentum metus elementum facilisis. Morbi interdum,
-            metus non gravida faucibus, ligula lorem egestas tellus, Morbi
-            interdum, metus non gravida faucibus, ligula lorem egestas tellus,
-            quis dapibus lectus nisl et tortor. Aenean sit amet
-            lorem velit, sed posuere sapien. Ut lacinia arcu condimentum metus
-            elementum facilisis. ', 3);
+                // set the content for the 3rd column
+                $slip->html('Aenean sit amet lorem velit, sed posuere sapien. Ut
+                    lacinia arcu condimentum metus elementum facilisis. Morbi interdum,
+                    metus non gravida faucibus, ligula lorem egestas tellus, Morbi
+                    interdum, metus non gravida faucibus, ligula lorem egestas tellus,
+                    quis dapibus lectus nisl et tortor. Aenean sit amet
+                    lorem velit, sed posuere sapien. Ut lacinia arcu condimentum metus
+                    elementum facilisis. ', 3);
 
-        // set a css class to the second column
-        $slip->setColumnClass('red-text', 2);
+                // set a css class to the second column
+                $slip->setColumnClass('red-text', 2);
 
-        // set the content for the 2nd column
-        $slip->html('<img width="140" height="140" src="https://secure.gravatar.com/avatar/9d783f6c19a2ad1de9c2fe7573f050c9?s=140" />', 2);
+                // set the content for the 2nd column
+                $slip->html('<img width="140" height="140" src="https://secure.gravatar.com/avatar/9d783f6c19a2ad1de9c2fe7573f050c9?s=140" />', 2);
 
-        // append more content to the 2nd column
-        $slip->append('<hr />Morbi interdum, metus non gravida faucibus, ligula
-            lorem egestas tellus. Aenean sit amet lorem velit, sed posuere
-            sapien. Ut lacinia arcu condimentum metus elementum facilisis.', 2);
+                // append more content to the 2nd column
+                $slip->append('<hr />Morbi interdum, metus non gravida faucibus, ligula
+                    lorem egestas tellus. Aenean sit amet lorem velit, sed posuere
+                    sapien. Ut lacinia arcu condimentum metus elementum facilisis.', 2);
 
-        // enable debugging to see the columns and get column numbers.
-        if(isset($_GET['debug'])){
-            $nest->debug();
-            $slip->debug();
-            $page->debug();
-        }
+            // enable debugging to see the columns and get column numbers.
+            if(isset($_GET['debug'])){
+                $nest->debug();
+                $slip->debug();
+                $page->debug();
+            }
 
-        // append the slip nested layout to the first nested layout
-        $nest->append($slip->renderLayout(), 1);
+            // append the slip nested layout to the first nested layout
+            $nest->append($slip->renderLayout(), 1);
 
         // append the first nested layout to the main page layout
         $page->append($nest->renderLayout(), 3);
