@@ -24,9 +24,7 @@ include_once "libs/phpscaffold.php";
       .box{
         text-align: justify;
       }
-      .red-text{
-          color: #ff0011;
-      }
+
     </style>
 
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -44,11 +42,25 @@ include_once "libs/phpscaffold.php";
         // 2 Rows 3 columns in total
         $page->setLayout('12|4:8');
         // Send content to the first column
-        $page->html('<h1>Grid Example with Content</h1>An example of grid based
+        $page->html('<h1>Responsive Grid Example with Content</h1><p class="lead">An example of grid based
             layouts with content arranged in columns with nested within nested
-            layouts.<hr />',1);
+            layouts.</p>',1);
+
+        $page->append('<ul class="breadcrumb">
+    <li>
+    <a href="#">Home</a> <span class="divider">/</span>
+    </li>
+    <li>
+    <a href="#">Library</a> <span class="divider">/</span>
+    </li>
+    <li class="active">
+    <a href="#">Data</a>
+    </li>
+    </ul>', 1);
+
+
         // Send content to the second column
-        $page->html('<h2>Left Column</h2>Vivamus odio ante, auctor in facilisis
+        $page->html('<h2>Left Column Title</h2><p>Vivamus odio ante, auctor in facilisis
             et, aliquet vitae eros. Etiam sed elit vitae dolor vehicula auctor
             nec a tellus. Sed imperdiet tempor iaculis. Suspendisse nec turpis
             at leo semper sodales. Cum sociis natoque penatibus et magnis dis
@@ -56,7 +68,7 @@ include_once "libs/phpscaffold.php";
             amet tristique ipsum. Donec id nibh cursus tortor venenatis tempus
             at euismod magna. Sed dapibus felis vel elit porta id lacinia urna
             aliquam. Praesent tempor neque vitae quam iaculis sed euismod turpis
-            dictum. Quisque vel enim libero. In volutpat euismod fringilla.
+            dictum. Quisque vel enim libero.</p><p>In volutpat euismod fringilla.
             Etiam vel arcu id nisl auctor iaculis nec quis lorem. Praesent
             posuere velit non justo elementum vel malesuada dui euismod.
             Donec euismod sem vel nulla pharetra ullamcorper. Etiam placerat,
@@ -67,9 +79,9 @@ include_once "libs/phpscaffold.php";
             at quam adipiscing consequat. In egestas odio eget augue imperdiet
             at molestie enim facilisis. Suspendisse metus nisi, suscipit non
             feugiat non, molestie a magna. Nam non ante quis sapien hendrerit
-            laoreet. ', 2);
+            laoreet. </p>', 2);
         //send content to the 3rd column
-        $page->html('<h2>Nested Title <small>Title spans accros nested columns
+        $page->html('<h2>Right Column Title <small>Title spans across the nested columns
             </small></h2>', 3);
         
         //set teh 2st columns css class
@@ -81,12 +93,12 @@ include_once "libs/phpscaffold.php";
             // Set the nested structure. it will be nested in an 8 column span
             $nest->setLayout('4:4');
             // set conent for the 1st nested column
-            $nest->html('Morbi interdum, metus non gravida faucibus, ligula lorem
+            $nest->html('<p>Morbi interdum, metus non gravida faucibus, ligula lorem
                 egestas tellus, quis dapibus lectus nisl et tortor. Aenean sit amet
                 lorem velit, sed posuere sapien. Ut lacinia arcu condimentum metus
-                elementum facilisis.  ', 1);
+                elementum facilisis.</p>  ', 1);
             // set conent for the 2nd nested column
-            $nest->html('Vivamus odio ante, auctor in facilisis
+            $nest->html('<p>Vivamus odio ante, auctor in facilisis
                 et, aliquet vitae eros. Etiam sed elit vitae dolor vehicula auctor
                 nec a tellus. Sed imperdiet tempor iaculis. Suspendisse nec turpis
                 at leo semper sodales. Cum sociis natoque penatibus et magnis dis
@@ -94,7 +106,7 @@ include_once "libs/phpscaffold.php";
                 amet tristique ipsum. Donec id nibh cursus tortor venenatis tempus
                 at euismod magna. Sed dapibus felis vel elit porta id lacinia urna
                 aliquam. Praesent tempor neque vitae quam iaculis sed euismod turpis
-                dictum. Quisque vel enim libero. In volutpat euismod fringilla.
+                dictum. Quisque vel enim libero.</p><p>In volutpat euismod fringilla.
                 Etiam vel arcu id nisl auctor iaculis nec quis lorem. Praesent
                 posuere velit non justo elementum vel malesuada dui euismod.
                 Donec euismod sem vel nulla pharetra ullamcorper. Etiam placerat,
@@ -105,7 +117,7 @@ include_once "libs/phpscaffold.php";
                 at quam adipiscing consequat. In egestas odio eget augue imperdiet
                 at molestie enim facilisis. Suspendisse metus nisi, suscipit non
                 feugiat non, molestie a magna. Nam non ante quis sapien hendrerit
-                laoreet. ', 2);
+                laoreet.</p>', 2);
 
             // set the 1st nested columns css class
             $nest->setColumnClass('box', 1);
@@ -123,27 +135,24 @@ include_once "libs/phpscaffold.php";
                 $slip->setLayout('4|2:2');
 
                 // set the content for the first column
-                $slip->html('<h3>Innser time <small>Nested nested</small></h3>', 1);
+                $slip->html('<hr /><h3>Inner nested item <small>The inception layout</small></h3>', 1);
 
                 // set the content for the 3rd column
-                $slip->html('Aenean sit amet lorem velit, sed posuere sapien. Ut
+                $slip->html('<p>Aenean sit amet lorem velit, sed posuere sapien. Ut
                     lacinia arcu condimentum metus elementum facilisis. Morbi interdum,
                     metus non gravida faucibus, ligula lorem egestas tellus, Morbi
                     interdum, metus non gravida faucibus, ligula lorem egestas tellus,
-                    quis dapibus lectus nisl et tortor. Aenean sit amet
-                    lorem velit, sed posuere sapien. Ut lacinia arcu condimentum metus
-                    elementum facilisis. ', 3);
-
-                // set a css class to the second column
-                $slip->setColumnClass('red-text', 2);
+                    quis dapibus lectus nisl et tortor.</p><p>Aenean sit amet
+                    lorem velit, sed posuere sapien.</p>', 3);
 
                 // set the content for the 2nd column
-                $slip->html('<img width="140" height="140" src="https://secure.gravatar.com/avatar/9d783f6c19a2ad1de9c2fe7573f050c9?s=140" />', 2);
+                $slip->html('
+                    <img src="https://secure.gravatar.com/avatar/9d783f6c19a2ad1de9c2fe7573f050c9?s=500" />
+                    ', 2);
 
                 // append more content to the 2nd column
-                $slip->append('<hr />Morbi interdum, metus non gravida faucibus, ligula
-                    lorem egestas tellus. Aenean sit amet lorem velit, sed posuere
-                    sapien. Ut lacinia arcu condimentum metus elementum facilisis.', 2);
+                $slip->append('<p>Morbi interdum, metus non gravida faucibus, ligula
+                    lorem egestas tellus.</p>', 2);
 
             // enable debugging to see the columns and get column numbers.
             if(isset($_GET['debug'])){
