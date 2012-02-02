@@ -22,22 +22,20 @@
 
 class Layout {
 
-    private $layoutString;
-    private $html;
-    private $offset;
-    private $debug;
-    private $layoutType;
+    private $layoutString = array();
+    private $html = array();
+    private $offset = array();
+    private $classes = array();
+    private $rowClasses = array();
+    private $debug = false;
+    private $layoutType = 'row';
+    private $rowID = array();
+    private $columnID = array();
 
     function Layout($layoutType = 'fixed') {
-        $this->html = array();
-        $this->classes = array();
-        $this->offset = array();
         if(strtolower($layoutType) == 'fluid'){
             $this->layoutType = 'row-fluid';
-        }else{
-            $this->layoutType = 'row';
         }
-
     }
     public function debug(){
         $this->debug = true;
@@ -45,73 +43,112 @@ class Layout {
     public function setLayout($str) {
         $this->layoutString = $str;
     }
-    public function gethtml($index) {
-        if(isset($this->html[$index])){
-            return $this->html[$index];
+    public function gethtml($column) {
+        if(!empty($this->html[$column])){
+            return $this->html[$column];
         }else{
             return false;
         }
     }
-    public function html($html, $index) {
-        $this->html[$index] = $html;
+    public function html($html, $column) {
+        $this->html[$column] = $html;
     }
-    public function append($html, $index) {
-        if(isset($this->html[$index])){
-            $this->html[$index] = $this->html[$index].$html;
+    public function append($html, $column) {
+        if(!empty($this->html[$column])){
+            $this->html[$column] = $this->html[$column].$html;
         }else{
-            $this->html[$index] = $html;
+            $this->html[$column] = $html;
         }
     }
-    public function prepend($html, $index) {
-        if(isset($this->html[$index])){
-            $this->html[$index] = $html.$this->html[$index];
+    public function prepend($html, $column) {
+        if(!empty($this->html[$column])){
+            $this->html[$column] = $html.$this->html[$column];
         }else{
-            $this->html[$index] = $html;
+            $this->html[$column] = $html;
         }
     }
-    public function setClass($class, $index){
-        $this->classes[$index] = $class;
+    public function setColumnClass($class, $column){
+        $this->classes[$column] = $class;
     }
-    public function appendClass($class, $index){
-        if(isset($this->classes[$index])){
-            $this->classes[$index] = $this->classes[$index].' '.$class;
+    public function appendColumnClass($class, $column){
+        if(!empty($this->classes[$column])){
+            $this->classes[$column] = $this->classes[$column].' '.$class;
         }else{
-            $this->classes[$index] = $class;
+            $this->classes[$column] = $class;
         }
     }
-    public function prependClass($class, $index){
-        if(isset($this->classes[$index])){
-            $this->classes[$index] = $class.' '.$this->classes[$index];
+    public function prependColumnClass($class, $column){
+        if(!empty($this->classes[$column])){
+            $this->classes[$column] = $class.' '.$this->classes[$column];
         }else{
-            $this->classes[$index] = $class;
+            $this->classes[$column] = $class;
         }
     }
-    public function offset($number, $index){
-            $this->offset[$index] = 'offset'.$number;
+    public function setRowClass($class, $row){
+        $this->rowClasses[$row] = $class;
+    }
+    public function appendRowClass($class, $row){
+        if(!empty($this->rowClasses[$row])){
+            $this->rowClasses[$row] = $this->rowClasses[$row].' '.$class;
+        }else{
+            $this->rowClasses[$row] = $class;
+        }
+    }
+    public function prependRowClass($class, $row){
+        if(!empty($this->rowClasses[$row])){
+            $this->rowClasses[$row] = $class.' '.$this->rowClasses[$row];
+        }else{
+            $this->rowClasses[$row] = $class;
+        }
+    }
+    public function offset($column, $offset){
+            $this->offset[$column] = 'offset'.$offset;
+    }
+    public function setRowID($ID, $column){
+            $this->rowID[$column] = $ID;
+    }
+    public function setColumnID($ID, $column){
+            $this->columnID[$column] = $ID;
     }
     public function appendRow($rowLayout){
-        if(isset($this->layoutString)){
+        if(!empty($this->layoutString)){
             $this->layoutString = $this->layoutString.'|'.$rowLayout;
         }else{
             $this->layoutString = $rowLayout;
         }
     }
     public function prependRow($rowLayout){
-        if(isset($this->layoutString)){
+        if(!empty($this->layoutString)){
             $this->layoutString = $rowLayout.'|'.$this->layoutString;
         }else{
             $this->layoutString = $rowLayout;
         }
     }
-    function renderLayout() {
+    public function renderLayout() {
+
+        if(empty($this->layoutString))
+                return 'ERROR: Layout string not set.';
+
         $lastChar = '';
         //start row
         $debugclass = '';
-        if(isset($this->debug)){
+        $rowClass = '';
+        if(!empty($this->debug)){
             $debugclass = '  show-grid';
-        }
-        $output = "<div class=\"".$this->layoutType.$debugclass."\">\n";
+        }        
         $contentIndex = 1;
+        $rowIndex = 1;
+        $rowID = '';
+        if(isset($this->rowID[$rowIndex])){
+            $rowID = ' id="'.$this->rowID[$rowIndex].'"';
+        }
+        if(isset($this->rowClasses[$rowIndex])){
+            $rowClass = ' '.$this->rowClasses[$rowIndex];
+        }
+
+        $output = "<div".$rowID." class=\"".$this->layoutType.$debugclass.$rowClass."\">\n";
+        $rowIndex++;
+        
         for ($i = 0; $i <= strlen($this->layoutString); $i++) {
 
             //// Get the current character
@@ -128,10 +165,25 @@ class Layout {
                 }
                 $Class .= $addClass;
             }
+            $columnID = '';
+            $rowID = '';
+            $rowClass = '';
+            if(isset($this->rowID[$rowIndex])){
+                $rowID = ' id="'.$this->rowID[$rowIndex].'"';
+                //$rowIndex++;
+            }
+            $helper = '';
+            if(!empty($this->debug)){
+                $helper = "title=\"Column ".$contentIndex."\"";
+            }
             switch ($char) {
                 case ':';
                     if(!empty($lastChar)){
-                        $output .= "<div class=\"".$Class."\">\n";
+                        $columnID = '';
+                        if(isset($this->columnID[$contentIndex])){
+                            $columnID = ' id="'.$this->columnID[$contentIndex].'"';
+                        }
+                        $output .= "<div".$columnID." class=\"".$Class."\" ".$helper.">\n";
                         if(isset($this->html[$contentIndex])){
                             $output .= $this->html[$contentIndex];
                         }
@@ -142,25 +194,44 @@ class Layout {
                     break;
                 case '|';
                     if(!empty($lastChar)){
-                        $output .= "<div class=\"".$Class."\">\n";
+                        $columnID = '';
+                        if(isset($this->columnID[$contentIndex])){
+                            $columnID = ' id="'.$this->columnID[$contentIndex].'"';
+                        }
+                        $output .= "<div".$columnID." class=\"".$Class."\" ".$helper.">\n";
                         if(isset($this->html[$contentIndex])){
                             $output .= $this->html[$contentIndex];
                         }
                         $output .= "</div>\n";
                     }
-                    $output .= "</div>\n<div class=\"".$this->layoutType.$debugclass."\">\n";
-
+                    if(isset($this->rowClasses[$rowIndex])){
+                        $rowClass = ' '.$this->rowClasses[$rowIndex];
+                    }
+                    $output .= "</div>\n<div".$rowID." class=\"".$this->layoutType.$debugclass.$rowClass."\">\n";
+                    $rowIndex++;
                     $lastChar = '';
                     break;
                 case '[';
-                    $output .= "<div class=\"".$Class."\">\n";
-                    $output .= "<div class=\"row".$debugclass."\">\n";
+                        $columnID = '';
+                        if(isset($this->columnID[$contentIndex])){
+                            $columnID = ' id="'.$this->columnID[$contentIndex];
+                        }
+                    $output .= "<div".$columnID." class=\"".$Class."\" ".$helper.">\n";
+                    if(isset($this->rowClasses[$rowIndex])){
+                        $rowClass = ' '.$this->rowClasses[$rowIndex].'"';
+                    }
+                    $output .= "<div".$rowID." class=\"".$this->layoutType.$debugclass.$rowClass."\">\n";
                     $lastChar = '';
                     $contentIndex--;
+                    $rowIndex++;
                     break;
                 case ']';
                     if(!empty($lastChar)){
-                        $output .= "<div class=\"".$Class."\">\n";
+                        $columnID = '';
+                        if(isset($this->columnID[$contentIndex])){
+                            $columnID = ' id="'.$this->columnID[$contentIndex].'"';
+                        }
+                        $output .= "<div".$columnID." class=\"".$Class."\" ".$helper.">\n";
                         if(isset($this->html[$contentIndex])){
                             $output .= $this->html[$contentIndex];
                         }
@@ -178,10 +249,14 @@ class Layout {
             }
             $contentIndex++;
         }
-
+        
         // End the last Column if there is one
         if (!empty($lastChar)) {
-            $output .= "<div class=\"".$Class."\">\n";
+            $columnID = '';
+            if(isset($this->columnID[$contentIndex])){
+                $columnID = ' id="'.$this->columnID[$contentIndex].'"';
+            }
+            $output .= "<div".$columnID." class=\"".$Class."\" ".$helper.">\n";
             if(isset($this->html[$contentIndex])){
                 $output .= $this->html[$contentIndex];
             }
