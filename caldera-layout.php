@@ -108,17 +108,17 @@ class calderaLayout {
 	}
 
 	public function html($html, $map, $type = 'replace') {
-		$this->mapValue( 'html', $html, $map );
+		self::mapValue( 'html', $html, $map );
 		$this->grid = self::mergeArray( $this->grid, $map, $type );
 	}
 
 	public function before($html, $map) {
-		$this->mapValue( 'before', $html, $map );
+		self::mapValue( 'before', $html, $map );
 		$this->grid = self::mergeArray( $this->grid, $map );
 	}
 
 	public function after($html, $map) {
-		$this->mapValue( 'after', $html, $map );
+		self::mapValue( 'after', $html, $map );
 		$this->grid = self::mergeArray( $this->grid, $map );
 	}
 
@@ -131,17 +131,17 @@ class calderaLayout {
 	}
 
 	public function setClass($class, $map) {
-		$this->mapValue( 'class', $class, $map );
+		self::mapValue( 'class', $class, $map );
 		$this->grid = self::mergeArray( $this->grid, $map );
 	}
 
 	public function appendClass($class, $map) {
-		$this->mapValue( 'class', $class, $map );
+		self::mapValue( 'class', $class, $map );
 		$this->grid = self::mergeArray( $this->grid, $map, 'append' );
 	}
 
 	public function prependClass($class, $map) {
-		$this->mapValue( 'class', $class, $map );
+		self::mapValue( 'class', $class, $map );
 		$this->grid = self::mergeArray( $this->grid, $map, 'prepend' );
 	}
 
@@ -153,7 +153,7 @@ class calderaLayout {
 	}
 
 	public function setID($ID, $map) {
-		$this->mapValue( 'id', $ID, $map );
+		self::mapValue( 'id', $ID, $map );
 		$this->grid = self::mergeArray( $this->grid, $map );
 	}
 
