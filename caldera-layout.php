@@ -160,12 +160,10 @@ class calderaLayout {
 	public function renderLayout($grid = false) {
 		$output = '';
 
-		$inner = true;
 		if ( empty($this->grid) ) {
 			return 'ERROR: Layout string not set.';
 		}
 		if ( empty($grid) ) {
-			$inner = false;
 			$grid  = $this->grid;
 		}
 
@@ -173,8 +171,6 @@ class calderaLayout {
 
 			$rowID     = '';
 			$rowClass  = '';
-			$rowBefore = '';
-			$rowAfter  = '';
 
 			if ( isset($cols['id']) ) {
 				$rowID = 'id="' . $cols['id'] . '" ';
