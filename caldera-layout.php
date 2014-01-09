@@ -16,11 +16,14 @@ class calderaLayout {
     private $nests = array();
     private $output = '';
     public  $grid = array();
-    
 
-    function __construct() {
-        
-        $this->config = json_decode(file_get_contents(plugin_dir_path(__FILE__) . '/engine-config.json'), true);
+    function __construct($path_to_config = false) {
+
+        if ($path_to_config === false) {
+            $path_to_config = plugin_dir_path(__FILE__) . '/engine-config.json';
+        }
+
+        $this->config = json_decode( file_get_contents( $path_to_config ), true );
         if(empty($this->config)){
             echo 'Error loading engine config';
             die;
@@ -29,7 +32,7 @@ class calderaLayout {
     public function debug(){
         $this->debug = true;
     }
-    public function setLayout($str){        
+    public function setLayout($str){
         // find nests
         preg_match_all("/\[[0-9:\|]+\]/", $str, $matches);
         if(!empty($matches[0])){
@@ -44,9 +47,9 @@ class calderaLayout {
     private function splitString($str){
         $rows = explode('|', $str);
         $grid = array();
-        foreach($rows as $row=>$cols){            
+        foreach($rows as $row=>$cols){
             $cols = explode(':',$cols);
-            foreach($cols as $col=>$span){                
+            foreach($cols as $col=>$span){
                 $nest = strpos($span, '__');
                 if($nest !== false){
                     $grid[$row+1][$col+1] = $this->splitString($this->nests[substr($span,$nest)]);
@@ -57,7 +60,7 @@ class calderaLayout {
         }
         return $grid;
     }
-    static function mergeArray($first, $second, $type = 'replace'){       
+    static function mergeArray($first, $second, $type = 'replace'){
         foreach($second as $key => $value) {
             if(is_array($value)){
                 if(!isset($first[$key])){
@@ -96,7 +99,7 @@ class calderaLayout {
             $out .= '{"'.$val.'":';
             $end .= "}";
         }
-        $map = json_decode($out.json_encode(array($type=>$value)).$end, true);        
+        $map = json_decode($out.json_encode(array($type=>$value)).$end, true);
     }
     public function html($html, $map, $type = 'replace') {
         $this->mapValue('html', $html, $map);
@@ -122,12 +125,12 @@ class calderaLayout {
     }
     public function appendClass($class, $map){
         $this->mapValue('class', $class, $map);
-        $this->grid = self::mergeArray($this->grid, $map, 'append');        
+        $this->grid = self::mergeArray($this->grid, $map, 'append');
     }
     public function prependClass($class, $map){
         $this->mapValue('class', $class, $map);
         $this->grid = self::mergeArray($this->grid, $map, 'prepend');
-    }    
+    }
     public function setRowID($ID, $row){
         if(!isset($this->grid[$row])){return;}
             $this->grid[$row]['id'] = $ID;
@@ -145,28 +148,28 @@ class calderaLayout {
             $inner = false;
             $grid = $this->grid;
         }
-        
+
         foreach($grid as $row=>$cols){
 
             $rowID = '';
             $rowClass = '';
             $rowBefore = '';
             $rowAfter = '';
-            
+
             if(isset($cols['id'])){
                 $rowID = 'id="'.$cols['id'].'" ';
                 unset($cols['id']);
             }
-            
+
             if(isset($cols['class'])){
                 $rowClass = $cols['class'];
                 unset($cols['class']);
             }
-            
+
             if(isset($grid['*']['class'])){
                 $rowClass .= $grid['*']['class'];
             }
-            
+
             if($row === 1 && $row !== count($grid)){
                 $rowClass .= " ".$this->config['row']['first'];
             }elseif ($row === count($grid) && $row !== 1){
@@ -174,13 +177,13 @@ class calderaLayout {
             }elseif ($row === count($grid) && $row === 1){
                 $rowClass .= " ".$this->config['row']['single'];
             }
-            
+
             if(isset($cols['before'])){
                 $this->output .= $cols['before'];
             }
-                        
+
             $this->output .= sprintf($this->config['row']['before'], $rowID, $rowClass);//"<div ".$rowID."class=\"".$gridClass." ".$rowClass."\">\n";
-            
+
             if(!is_array($cols)){
                 echo $cols;
             }
@@ -194,7 +197,7 @@ class calderaLayout {
                     if(isset($cols['*']['class'])){
                         $colClass .= $cols['*']['class'];
                     }
-                    
+
                     if($col === 1 && $col !== count($cols)){
                         $colClass .= " ".$this->config['columns']['first'];
                     }elseif($col === count($cols) && $col !== 1){
@@ -216,22 +219,22 @@ class calderaLayout {
                         $afterBuffer = $content['after'];
                         unset($content['after']);
                     }
-                    $span = ! empty($this->config['columns'][$content['span']]) ? $content['span'] : 'default';                    
+                    $span = ! empty($this->config['columns'][$content['span']]) ? $content['span'] : 'default';
                     $this->output .= sprintf($this->config['columns'][$span]['before'], $colID, $content['span'], $colClass);//"    <div class=\"span".$content['span']." ".$colClass."\">\n";
                     $this->output .= $content['html'];
                     unset($content['html']);
                     unset($content['span']);
                     if(!empty($content)){
-                       $this->output = $this->renderLayout($content);                       
+                       $this->output = $this->renderLayout($content);
                     }
                     $this->output .= $this->config['columns'][$span]['after'];
-                    $this->output .= $afterBuffer;                    
+                    $this->output .= $afterBuffer;
                 }
-            $this->output .= $this->config['row']['after'];//"</div>\n";            
+            $this->output .= $this->config['row']['after'];//"</div>\n";
             if(isset($cols['after'])){
                 $this->output .= $cols['after'];
             }
-            
+
         }
 
         //dump($grid);
