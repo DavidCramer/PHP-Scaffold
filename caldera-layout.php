@@ -12,7 +12,6 @@ class calderaLayout {
 	private $debug = false;
 	private $config = array();
 	private $nests = array();
-	private $output = '';
 	public $grid = array();
 
 	function __construct($path_to_config = false) {
@@ -159,6 +158,8 @@ class calderaLayout {
 	}
 
 	public function renderLayout($grid = false) {
+		$output = '';
+
 		$inner = true;
 		if ( empty($this->grid) ) {
 			return 'ERROR: Layout string not set.';
@@ -198,10 +199,10 @@ class calderaLayout {
 			}
 
 			if ( isset($cols['before']) ) {
-				$this->output .= $cols['before'];
+				$output .= $cols['before'];
 			}
 
-			$this->output .= sprintf( $this->config['row']['before'], $rowID, $rowClass ); //"<div ".$rowID."class=\"".$gridClass." ".$rowClass."\">\n";
+			$output .= sprintf( $this->config['row']['before'], $rowID, $rowClass ); //"<div ".$rowID."class=\"".$gridClass." ".$rowClass."\">\n";
 
 			if ( !is_array( $cols ) ) {
 				echo $cols;
@@ -232,7 +233,7 @@ class calderaLayout {
 					unset($content['id']);
 				}
 				if ( isset($content['before']) ) {
-					$this->output .= $content['before'];
+					$output .= $content['before'];
 					unset($content['before']);
 				}
 				$afterBuffer = '';
@@ -241,25 +242,24 @@ class calderaLayout {
 					unset($content['after']);
 				}
 				$span = !empty($this->config['columns'][$content['span']]) ? $content['span'] : 'default';
-				$this->output .= sprintf( $this->config['columns'][$span]['before'], $colID, $content['span'], $colClass ); //"    <div class=\"span".$content['span']." ".$colClass."\">\n";
-				$this->output .= $content['html'];
+				$output .= sprintf( $this->config['columns'][$span]['before'], $colID, $content['span'], $colClass ); //"    <div class=\"span".$content['span']." ".$colClass."\">\n";
+				$output .= $content['html'];
 				unset($content['html']);
 				unset($content['span']);
 				if ( !empty($content) ) {
-					$this->output = $this->renderLayout( $content );
+					$output = $this->renderLayout( $content );
 				}
-				$this->output .= $this->config['columns'][$span]['after'];
-				$this->output .= $afterBuffer;
+				$output .= $this->config['columns'][$span]['after'];
+				$output .= $afterBuffer;
 			}
-			$this->output .= $this->config['row']['after']; //"</div>\n";
+			$output .= $this->config['row']['after']; //"</div>\n";
 			if ( isset($cols['after']) ) {
-				$this->output .= $cols['after'];
+				$output .= $cols['after'];
 			}
 
 		}
 
-		//dump($grid);
-		return $this->output;
+		return $output;
 	}
 
 }
