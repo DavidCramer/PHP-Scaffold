@@ -14,13 +14,15 @@ class calderaLayout {
 	private $nests = array();
 	public $grid = array();
 
-	function __construct($path_to_config = false) {
+	function __construct($config = false) {
 
-		if ( $path_to_config === false ) {
-			$path_to_config = plugin_dir_path( __FILE__ ) . '/engine-config.json';
+		if ( is_array( $config ) ) {
+			$this->config = $config;
+		}else{
+			if( file_exists( $config ) ){
+				$this->config = json_decode( file_get_contents( $config ), true );
+			}
 		}
-
-		$this->config = json_decode( file_get_contents( $path_to_config ), true );
 		if ( empty($this->config) ) {
 			echo 'Error loading engine config';
 			die;
