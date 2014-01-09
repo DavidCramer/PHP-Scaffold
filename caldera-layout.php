@@ -243,7 +243,7 @@ class calderaLayout {
 				unset($content['html']);
 				unset($content['span']);
 				if ( !empty($content) ) {
-					$output = $this->renderLayout( $content );
+					$output .= $this->renderLayout( $content );
 				}
 				$output .= $this->config['columns'][$span]['after'];
 				$output .= $afterBuffer;
