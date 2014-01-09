@@ -160,7 +160,7 @@ class calderaLayout {
 	public function renderLayout($grid = false) {
 		$output = '';
 
-		if ( empty($this->grid) ) {
+		if ( empty($this->grid) && empty($grid) ) {
 			return 'ERROR: Layout string not set.';
 		}
 		if ( empty($grid) ) {
