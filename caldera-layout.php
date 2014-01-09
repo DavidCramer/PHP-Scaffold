@@ -9,9 +9,7 @@
 
 class calderaLayout {
 
-    private $layoutString = array();
     private $debug = false;
-    private $layoutType = false;
     private $config = array();
     private $nests = array();
     private $output = '';
